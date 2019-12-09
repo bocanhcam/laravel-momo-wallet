@@ -1,0 +1,15 @@
+{
+    "name": "hora/laravel-momo-wallet",
+    "description": "This is laravel package connecting your app with momo wallet",
+    "type": "package",
+    "authors": [
+        {
+            "name": "hoang",
+            "email": "hora.alien@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "guzzlehttp/guzzle": "^6.5@dev"
+    }
+}
