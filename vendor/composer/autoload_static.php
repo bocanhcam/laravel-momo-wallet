@@ -18,6 +18,10 @@ class ComposerStaticInitf9a7a775c1613cf2020ad08b9108abb7
         array (
             'Psr\\Http\\Message\\' => 17,
         ),
+        'H' => 
+        array (
+            'Hora\\LaravelMomoWallet\\' => 23,
+        ),
         'G' => 
         array (
             'GuzzleHttp\\Psr7\\' => 16,
@@ -30,6 +34,10 @@ class ComposerStaticInitf9a7a775c1613cf2020ad08b9108abb7
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Hora\\LaravelMomoWallet\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/src',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
