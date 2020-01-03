@@ -42,10 +42,10 @@ class AIORequest{
         $this->setSignature();
     }
 
-    public function setSignature()
+    protected function setSignature()
     {
         $string = $this->makeQuery();
-        $this->signature = hash_hmac('sha256', $string, 'TOlFoncBLYdGjeUYkH5DxI0UQxlXnYcn');
+        $this->signature = hash_hmac('sha256', $string, config('laravel-momo.momo_secret_key'));
     }
 
     protected function makeQuery()
