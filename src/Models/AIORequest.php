@@ -18,28 +18,50 @@ class AIORequest{
     public $signature;
     public $extraData;
 
+    const REQUEST_TYPE = 'captureMoMoWallet';
+
     public function __construct(
-        $requestId,
-        $amount,
+        //$requestId,
         $orderId,
-        $orderInfo,
-        $returnUrl,
-        $notifyUrl,
-        $requestType,
-        $extraData
+        $amount
+        //$orderInfo,
+        //$returnUrl
+        //$notifyUrl
+        //$requestType,
+        //$extraData
     )
     {
         $this->partnerCode = config('laravel-momo.momo_partner_code');
         $this->accessKey = config('laravel-momo.momo_access_key');
-        $this->requestId = (string) $requestId;
+        $this->requestId = config('laravel-momo.merchant_name').$orderId;
         $this->amount = (string) $amount;
-        $this->orderId = (string) $orderId;
-        $this->orderInfo = $orderInfo;
-        $this->returnUrl = $returnUrl;
-        $this->notifyUrl = $notifyUrl;
-        $this->requestType = $requestType;
-        $this->extraData = $extraData;
+        $this->orderId = config('laravel-momo.merchant_name').$orderId;
+        $this->orderInfo = '';
+        $this->returnUrl = config('laravel-momo.return_url');
+        $this->notifyUrl = config('laravel-momo.notify_url');
+        $this->requestType = self::REQUEST_TYPE;
+        $this->extraData = '';
         $this->setSignature();
+    }
+
+    public function setOrderInfo($orderInfo)
+    {
+        $this->orderInfo = $orderInfo;
+    }
+
+    public function setExtraData($extraData)
+    {
+        $this->extraData = $extraData;
+    }
+
+    public function setNotifyUrl($notifyUrl)
+    {
+        $this->notifyUrl = $notifyUrl;
+    }
+
+    public function setReturnUrl($returnUrl)
+    {
+        $this->returnUrl = $returnUrl;
     }
 
     protected function setSignature()
