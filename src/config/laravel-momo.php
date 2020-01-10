@@ -7,4 +7,5 @@ return [
     'momo_secret_key' => env('MOMO_SECRET_KEY'),
     'merchant_name' => env('MERCHANT_NAME'),
     'notify_url' => env('NOTIFY_URL'),
+    'return_url' => env('RETURN_URL'),
 ];

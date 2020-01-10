@@ -2,8 +2,6 @@
 
 namespace Hora\LaravelMomoWallet\Models;
 
-use Carbon\Carbon;
-
 class IPN{
 
     public $partnerCode;
@@ -82,6 +80,8 @@ class IPN{
 
     public function getResponse($errorCode)
     {
+        date_default_timezone_set('asia/ho_chi_minh');
+
         return [
             'partnerCode' => config('laravel-momo.momo_partner_code'),
             'accessKey' => config('laravel-momo.momo_access_key'),
@@ -89,7 +89,7 @@ class IPN{
             'orderId' => $this->orderId,
             'errorCode' => $errorCode,
             'message' => $this->responseMessage[$errorCode],
-            'responseTime' => Carbon::now(),
+            'responseTime' => date("YYYY-MM-DD HH:mm:ss"),
             'extraData' => $this->extraData,
             'signature' => $this->getSignatureResponse($errorCode)
         ];
