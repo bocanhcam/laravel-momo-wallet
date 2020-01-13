@@ -22,6 +22,7 @@ class IPN{
 
     const ORDER_TYPE = 'momo_wallet';
 
+    const SUCCESS = 0;
     const ERROR_ORDER_ID_WRONG_FORMART = 2;
     const ERROR_SIGNATURE_WRONG = 5;
     const ERROR_ORDER_ID_ALREADY_HAS = 6;
@@ -29,6 +30,7 @@ class IPN{
     const ERROR_UNKNOWN = 99;
 
     public $responseMessage = [
+        self::SUCCESS => 'Giao dịch thành công',
         self::ERROR_ORDER_ID_WRONG_FORMART => 'OrderId Sai định dạng',
         self::ERROR_SIGNATURE_WRONG => 'Sai chữ ký',
         self::ERROR_ORDER_ID_ALREADY_HAS => 'Đơn hàng đã thanh toán',
