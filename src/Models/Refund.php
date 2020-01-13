@@ -4,25 +4,23 @@ namespace Hora\LaravelMomoWallet\Models;
 
 use GuzzleHttp\Client;
 
-class AIORequest{
+class Refund{
 
     public $partnerCode;
     public $accessKey;
     public $requestId;
     public $amount;
     public $orderId;
-    public $orderInfo;
-    public $returnUrl;
-    public $notifyUrl;
+    public $transId;
     public $requestType;
     public $signature;
-    public $extraData;
 
-    const REQUEST_TYPE = 'captureMoMoWallet';
+    const REQUEST_TYPE = 'refundMoMoWallet';
 
     public function __construct(
         $orderId,
-        $amount
+        $amount,
+        $transId
     )
     {
         $this->partnerCode = config('laravel-momo.momo_partner_code');
@@ -30,31 +28,8 @@ class AIORequest{
         $this->requestId = config('laravel-momo.merchant_name').$orderId;
         $this->amount = (string) $amount;
         $this->orderId = config('laravel-momo.merchant_name').$orderId;
-        $this->orderInfo = '';
-        $this->returnUrl = config('laravel-momo.return_url');
-        $this->notifyUrl = config('laravel-momo.notify_url');
+        $this->transId = $transId;
         $this->requestType = self::REQUEST_TYPE;
-        $this->extraData = '';
-    }
-
-    public function setOrderInfo($orderInfo)
-    {
-        $this->orderInfo = $orderInfo;
-    }
-
-    public function setExtraData($extraData)
-    {
-        $this->extraData = $extraData;
-    }
-
-    public function setNotifyUrl($notifyUrl)
-    {
-        $this->notifyUrl = $notifyUrl;
-    }
-
-    public function setReturnUrl($returnUrl)
-    {
-        $this->returnUrl = $returnUrl;
     }
 
     public function setSignature()
@@ -70,10 +45,8 @@ class AIORequest{
             .'&requestId='.$this->requestId
             .'&amount='.$this->amount
             .'&orderId='.$this->orderId
-            .'&orderInfo='.$this->orderInfo
-            .'&returnUrl='.$this->returnUrl
-            .'&notifyUrl='.$this->notifyUrl
-            .'&extraData='.$this->extraData;
+            .'&transId='.$this->transId
+            .'&requestType='.$this->requestType;
 
         return $query;
     }
@@ -89,12 +62,9 @@ class AIORequest{
                 'requestId' => $this->requestId,
                 'amount' => $this->amount,
                 'orderId' => $this->orderId,
-                'orderInfo' => $this->orderInfo,
-                'returnUrl' => $this->returnUrl,
-                'notifyUrl' => $this->notifyUrl,
+                'transId' => $this->transId,
                 'requestType' => $this->requestType,
-                'signature' => $this->signature,
-                'extraData' => $this->extraData
+                'signature' => $this->signature
             ],
             'headers' => [
                 'Content-Type' => 'application/json; charset=UTF-8'
@@ -103,4 +73,5 @@ class AIORequest{
 
         return $response;
     }
+
 }

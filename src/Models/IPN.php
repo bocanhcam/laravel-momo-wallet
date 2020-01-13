@@ -4,8 +4,8 @@ namespace Hora\LaravelMomoWallet\Models;
 
 class IPN{
 
-    public $partnerCode;
-    public $accessKey;
+    //public $partnerCode;
+    //public $accessKey;
     public $requestId;
     public $amount;
     public $orderId;
