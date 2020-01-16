@@ -3,6 +3,7 @@
 namespace Hora\LaravelMomoWallet\Models;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class Refund{
 
@@ -25,9 +26,9 @@ class Refund{
     {
         $this->partnerCode = config('laravel-momo.momo_partner_code');
         $this->accessKey = config('laravel-momo.momo_access_key');
-        $this->requestId = config('laravel-momo.merchant_name').$orderId;
+        $this->requestId = config('laravel-momo.merchant_refund_prefix').$orderId;
         $this->amount = (string) $amount;
-        $this->orderId = config('laravel-momo.merchant_name').$orderId;
+        $this->orderId = config('laravel-momo.merchant_refund_prefix').$orderId;
         $this->transId = $transId;
         $this->requestType = self::REQUEST_TYPE;
     }
@@ -55,23 +56,26 @@ class Refund{
     {
         $client = new Client();
 
-        $response = $client->request('POST',config('laravel-momo.momo_payment_request'),[
-            'json' => [
-                'partnerCode' => $this->partnerCode,
-                'accessKey' => $this->accessKey,
-                'requestId' => $this->requestId,
-                'amount' => $this->amount,
-                'orderId' => $this->orderId,
-                'transId' => $this->transId,
-                'requestType' => $this->requestType,
-                'signature' => $this->signature
-            ],
-            'headers' => [
-                'Content-Type' => 'application/json; charset=UTF-8'
-            ]
-        ]);
-
-        return $response;
+        try {
+            $response = $client->request('POST',config('laravel-momo.momo_payment_request'),[
+                'json' => [
+                    'partnerCode' => $this->partnerCode,
+                    'accessKey' => $this->accessKey,
+                    'requestId' => $this->requestId,
+                    'amount' => $this->amount,
+                    'orderId' => $this->orderId,
+                    'transId' => $this->transId,
+                    'requestType' => $this->requestType,
+                    'signature' => $this->signature
+                ],
+                'headers' => [
+                    'Content-Type' => 'application/json; charset=UTF-8'
+                ]
+            ]);
+            return $response;
+        } catch (RequestException $e) {
+            return $e->getResponse();
+        }
     }
 
 }

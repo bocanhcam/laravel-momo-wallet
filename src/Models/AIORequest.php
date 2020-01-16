@@ -3,6 +3,7 @@
 namespace Hora\LaravelMomoWallet\Models;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 
 class AIORequest{
 
@@ -27,9 +28,9 @@ class AIORequest{
     {
         $this->partnerCode = config('laravel-momo.momo_partner_code');
         $this->accessKey = config('laravel-momo.momo_access_key');
-        $this->requestId = config('laravel-momo.merchant_name').$orderId;
+        $this->requestId = config('laravel-momo.merchant_order_prefix').$orderId;
         $this->amount = (string) $amount;
-        $this->orderId = config('laravel-momo.merchant_name').$orderId;
+        $this->orderId = config('laravel-momo.merchant_order_prefix').$orderId;
         $this->orderInfo = '';
         $this->returnUrl = config('laravel-momo.return_url');
         $this->notifyUrl = config('laravel-momo.notify_url');
@@ -82,6 +83,7 @@ class AIORequest{
     {
         $client = new Client();
 
+        try {
         $response = $client->request('POST',config('laravel-momo.momo_payment_request'),[
             'json' => [
                 'partnerCode' => $this->partnerCode,
@@ -102,5 +104,8 @@ class AIORequest{
         ]);
 
         return $response;
+        } catch (RequestException $e) {
+            return $e->getResponse();
+        }
     }
 }
