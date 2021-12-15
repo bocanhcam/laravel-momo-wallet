@@ -8,7 +8,7 @@
             "email": "hora.alien@gmail.com"
         }
     ],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "guzzlehttp/guzzle": "^6.5@dev"
     },
