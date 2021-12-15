@@ -90,7 +90,7 @@ class IPN{
             'requestId' => $this->requestId,
             'orderId' => $this->orderId,
             'errorCode' => $errorCode,
-            'message' => $this->responseMessage[$errorCode],
+            'message' => !empty($this->responseMessage[$errorCode]) ? $this->responseMessage[$errorCode] : "",
             'responseTime' => date("YYYY-MM-DD HH:mm:ss"),
             'extraData' => $this->extraData,
             'signature' => $this->getSignatureResponse($errorCode)
