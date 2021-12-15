@@ -8,7 +8,8 @@
             "email": "hora.alien@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "require": {
         "guzzlehttp/guzzle": "^6.5@dev"
     },
@@ -16,5 +17,6 @@
         "psr-4": {
             "Hora\\LaravelMomoWallet\\": "src"
         }
-    }
+    },
+    "version": "1.0.0"
 }
